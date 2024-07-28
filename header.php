@@ -18,6 +18,3 @@ require("mysql.inc.php");
             </li>
         </ul>
     </div>
-</body>
-
-</html>

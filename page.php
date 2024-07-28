@@ -2,6 +2,7 @@
 require('header.php');
 require('mysql.inc.php');
 
+
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action == 'add') {
@@ -53,7 +54,7 @@ if ($action == 'add') {
         $continut = $_POST['continut'];
         $data = $_POST['data'];
 
-        $sql = "UPDATE pagini SET name='$name', continut='$continut', data='$data' WHERE id='$id'";
+        $sql = "UPDATE pagini SET name='$name', continut='$continut', data='$data' WHERE id='$id' AND deleted_at IS NULL";
 
         // If the query is successful the user is redirected to index.php
         if ($conn->query($sql) === TRUE) {
@@ -102,7 +103,9 @@ if ($action == 'add') {
 } elseif ($action == 'delete' && isset($_GET['id']) && $_GET['id'] > 0) {
     $id = $_GET['id'];
 
-    $sql = "DELETE FROM pagini WHERE id='$id'";
+    //$sql = "DELETE FROM pagini WHERE id='$id'";
+    //Soft delete
+    $sql = "UPDATE pagini SET deleted_at=NOW() WHERE id='$id'";
 
     // If the query is successful the user is redirected to index.php
     if ($conn->query($sql) === TRUE) {
@@ -115,7 +118,7 @@ if ($action == 'add') {
     $id = $_GET['id'];
 
     // Fetching the page data based on the provided ID
-    $sql = "SELECT `id`, `name`, `continut`, `data` FROM pagini WHERE id='$id'";
+    $sql = "SELECT `id`, `name`, `continut`, `data` FROM pagini WHERE id='$id' AND deleted_at IS NULL";
     $result = $conn->query($sql);
 
     // Checking if the query returned any results
