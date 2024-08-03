@@ -1,3 +1,5 @@
 <?php
 
-require('page-list.php');
+require('header.php');
+
+require('footer.php');
