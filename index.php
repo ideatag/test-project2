@@ -1,5 +1,3 @@
 <?php
 
-require('header.php');
-
-require('footer.php');
+require('home.php');
